@@ -28,7 +28,6 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
@@ -42,14 +41,15 @@ import org.springframework.core.env.PropertySource;
 
 public abstract class AbstractBootstrapCredentialsConfigurationProvider<T>
     implements ConfigurationProvider<T> {
-/**
- * For larger number of Kubernetes accounts, as-is SpringBoot implementation of properties binding
- * is inefficient, hence a custom logic for KubernetesConfigurationProperties is written but it
- * still uses SpringBoot's Binder class. BootstrapKubernetesConfigurationProvider class fetches the
- * flattened kubernetes properties from Spring Cloud Config's BootstrapPropertySource and creates a
- * KubernetesConfigurationProperties object.
- */
+  /**
+   * For larger number of Kubernetes accounts, as-is SpringBoot implementation of properties binding
+   * is inefficient, hence a custom logic for KubernetesConfigurationProperties is written but it
+   * still uses SpringBoot's Binder class. BootstrapKubernetesConfigurationProvider class fetches
+   * the flattened kubernetes properties from Spring Cloud Config's BootstrapPropertySource and
+   * creates a KubernetesConfigurationProperties object.
+   */
   private final ConfigurableApplicationContext applicationContext;
+
   private CloudConfigResourceService configResourceService;
   private SecretSession secretSession;
   private Map<String, String> configServerCache;
