@@ -71,6 +71,7 @@ public class KubernetesCustomAccountConfigurationProvider
       accounts.getAccounts().add((KubernetesAccountProperties.ManagedAccount) result.get());
     }
     log.info("Finished loading kubernetes accounts");
+    log.info("* Completed binding {} Kubernetes accounts *", accounts.getAccounts().size());
     return accounts;
   }
 }
