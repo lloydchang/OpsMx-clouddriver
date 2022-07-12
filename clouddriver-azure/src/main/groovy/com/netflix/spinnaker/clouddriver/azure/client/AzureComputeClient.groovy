@@ -199,14 +199,19 @@ public class AzureComputeClient extends AzureBaseClient {
    * check the scale set's health status, wait for the timeout return true when healthy, false if we hit the timeout
    */
   Boolean waitForScaleSetHealthy(String resourceGroupName, String serverGroupName, long timeoutMillis) {
-    def instances = getServerGroupInstances(resourceGroupName, serverGroupName)
     def now = System.nanoTime()
     def currentTime = System.nanoTime()
+
+    // TODO: use available health probes to determine the sleep time
+    def sleepTimeSeconds = 5
+
     while (currentTime - now < timeoutMillis * 1000000) {
+      def instances = getServerGroupInstances(resourceGroupName, serverGroupName)
       if (!instances.any { it.healthState != HealthState.Up }) {
         return true
       }
-      Thread.sleep(100)
+
+      Thread.sleep(sleepTimeSeconds * 1000)
       currentTime = System.nanoTime()
     }
 
