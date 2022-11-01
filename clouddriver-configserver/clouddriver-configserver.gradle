@@ -19,10 +19,5 @@ dependencies {
   implementation "io.spinnaker.kork:kork-secrets"
   implementation "org.apache.commons:commons-lang3"
   implementation "org.springframework.cloud:spring-cloud-context"
-<<<<<<< HEAD
-  implementation "org.springframework.cloud:spring-cloud-config-server"
-  implementation "com.github.wnameless.json:json-flattener:0.11.1"
-=======
   implementation "org.springframework.cloud:spring-cloud-config-server:2.2.8.RELEASE"
->>>>>>> c8a8cef4e (Updated the spring cloud config server to 2.2.8 for resolving the JGit Exception and issue no. 17010)
 }
