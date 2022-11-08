@@ -19,4 +19,5 @@ dependencies {
   implementation "org.apache.commons:commons-lang3"
   implementation "org.springframework.cloud:spring-cloud-context"
   implementation "org.springframework.cloud:spring-cloud-config-server:2.2.8.RELEASE"
+  implementation "com.github.wnameless.json:json-flattener:0.11.1"
 }
