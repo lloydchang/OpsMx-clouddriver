@@ -23,9 +23,6 @@ import lombok.Data;
 public class KubernetesConfigurationProperties {
   private KubernetesJobExecutorProperties jobExecutor = new KubernetesJobExecutorProperties();
 
-  /** flag to toggle account health check. Defaults to true. */
-  private boolean verifyAccountHealth = true;
-
   @Data
   public static class KubernetesJobExecutorProperties {
     private Retries retries = new Retries();
