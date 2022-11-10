@@ -35,9 +35,6 @@ public class KubernetesConfigurationProperties {
 
   private Cache cache = new Cache();
 
-  /** flag to toggle account health check. Defaults to true. */
-  private boolean verifyAccountHealth = true;
-
   @Data
   public static class KubernetesJobExecutorProperties {
     private Retries retries = new Retries();
