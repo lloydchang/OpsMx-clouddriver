@@ -42,7 +42,9 @@ dependencies {
   implementation "org.springframework.boot:spring-boot-starter-actuator"
   implementation "org.springframework.boot:spring-boot-starter-json"
   implementation "org.springframework.boot:spring-boot-starter-web"
-  implementation "org.springframework.cloud:spring-cloud-context"
+  implementation("org.springframework.cloud:spring-cloud-context:2.2.8.RELEASE") {
+    force = true
+  }
 
   runtimeOnly "io.spinnaker.kork:kork-runtime"
   if (!gradle.hasProperty("excludeSpringConfigServer")) {

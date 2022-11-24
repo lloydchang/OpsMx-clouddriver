@@ -34,8 +34,12 @@ dependencies {
   implementation "com.squareup.retrofit:retrofit"
   implementation "org.springframework.boot:spring-boot-actuator"
   implementation "org.springframework.boot:spring-boot-starter-web"
-  implementation "org.springframework.cloud:spring-cloud-context"
-  implementation "org.springframework.cloud:spring-cloud-config-server:2.2.8.RELEASE"
+  implementation("org.springframework.cloud:spring-cloud-context:2.2.8.RELEASE") {
+    force = true
+  }
+  implementation("org.springframework.cloud:spring-cloud-config-server:2.2.8.RELEASE") {
+    force = true
+  }
 
   testImplementation "org.assertj:assertj-core"
   testImplementation "cglib:cglib-nodep"
