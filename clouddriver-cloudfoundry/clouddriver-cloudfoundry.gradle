@@ -62,7 +62,9 @@ dependencies {
   implementation "io.github.resilience4j:resilience4j-retry"
   implementation "org.springframework.boot:spring-boot-actuator"
   implementation "org.springframework.boot:spring-boot-starter-web"
-  implementation "org.springframework.cloud:spring-cloud-context"
+  implementation("org.springframework.cloud:spring-cloud-context:2.2.8.RELEASE") {
+    force = true
+  }
   implementation "org.yaml:snakeyaml:1.24"
   implementation "com.google.protobuf:protobuf-java:$protobufVersion"
   implementation "com.google.protobuf:protobuf-java-util:$protobufVersion"
