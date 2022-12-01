@@ -48,6 +48,8 @@ RUN adduser spinnaker
 
 RUN mkdir -p /opt/clouddriver/plugins
 
+RUN chown -R spinnaker:spinnaker /opt/
+
 USER spinnaker
 
 CMD ["/opt/clouddriver/bin/clouddriver"]
