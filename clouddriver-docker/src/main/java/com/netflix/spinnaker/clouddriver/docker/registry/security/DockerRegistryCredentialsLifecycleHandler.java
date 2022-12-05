@@ -15,6 +15,7 @@
  */
 
 package com.netflix.spinnaker.clouddriver.docker.registry.security;
+import com.netflix.spectator.api.Registry;
 import com.netflix.spinnaker.cats.agent.Agent;
 import com.netflix.spinnaker.clouddriver.docker.registry.DockerRegistryCloudProvider;
 import com.netflix.spinnaker.clouddriver.docker.registry.provider.DockerRegistryProvider;
@@ -34,6 +35,7 @@ public class DockerRegistryCredentialsLifecycleHandler
 
   private final DockerRegistryProvider provider;
   private final DockerRegistryCloudProvider cloudProvider;
+  private final Registry registry;
 
   @Override
   public void credentialsAdded(DockerRegistryNamedAccountCredentials credentials) {
@@ -66,7 +68,8 @@ public class DockerRegistryCredentialsLifecycleHandler
               i,
               credentials.getCacheThreads(),
               credentials.getCacheIntervalSeconds(),
-              credentials.getRegistry()));
+              credentials.getRegistry(),
+              registry));
     }
     return agents;
   }
