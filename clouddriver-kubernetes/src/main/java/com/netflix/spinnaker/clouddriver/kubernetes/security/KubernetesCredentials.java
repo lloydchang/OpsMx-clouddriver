@@ -34,8 +34,8 @@ import com.netflix.spectator.api.Clock;
 import com.netflix.spectator.api.Registry;
 import com.netflix.spinnaker.clouddriver.kubernetes.caching.agent.KubernetesCacheDataConverter;
 import com.netflix.spinnaker.clouddriver.kubernetes.config.CustomKubernetesResource;
-import com.netflix.spinnaker.clouddriver.kubernetes.config.KubernetesAccountProperties.ManagedAccount;
 import com.netflix.spinnaker.clouddriver.kubernetes.config.KubernetesCachingPolicy;
+import com.netflix.spinnaker.clouddriver.kubernetes.config.KubernetesConfigurationProperties;
 import com.netflix.spinnaker.clouddriver.kubernetes.config.LinkedDockerRegistryConfiguration;
 import com.netflix.spinnaker.clouddriver.kubernetes.config.RawResourcesEndpointConfig;
 import com.netflix.spinnaker.clouddriver.kubernetes.description.AccountResourcePropertyRegistry;
@@ -135,7 +135,7 @@ public class KubernetesCredentials {
   private final PermissionValidator permissionValidator;
   private final Supplier<ImmutableMap<KubernetesKind, KubernetesKindProperties>> crdSupplier =
       Suppliers.memoizeWithExpiration(this::crdSupplier, CRD_EXPIRY_SECONDS, TimeUnit.SECONDS);
-  private final Memoizer<ImmutableList<String>> liveNamespaceSupplier =
+  private final Supplier<ImmutableList<String>> liveNamespaceSupplier =
       Memoizer.memoizeWithExpiration(
           this::namespaceSupplier, NAMESPACE_EXPIRY_SECONDS, TimeUnit.SECONDS);
   @Getter private final Namer<KubernetesManifest> namer;
@@ -143,7 +143,7 @@ public class KubernetesCredentials {
   public KubernetesCredentials(
       Registry registry,
       KubectlJobExecutor jobExecutor,
-      ManagedAccount managedAccount,
+      KubernetesConfigurationProperties.ManagedAccount managedAccount,
       AccountResourcePropertyRegistry.Factory resourcePropertyRegistryFactory,
       KubernetesKindRegistry.Factory kindRegistryFactory,
       KubernetesSpinnakerKindMap kubernetesSpinnakerKindMap,
@@ -226,12 +226,6 @@ public class KubernetesCredentials {
       return cache.get(CACHE_KEY);
     }
 
-    /** Return the value from the cache or null if there is no cached value */
-    @Nullable
-    public T getIfPresent() {
-      return cache.getIfPresent(CACHE_KEY);
-    }
-
     public static <U> Memoizer<U> memoizeWithExpiration(
         Supplier<U> supplier, long expirySeconds, TimeUnit timeUnit) {
       return new Memoizer<>(supplier, expirySeconds, timeUnit);
@@ -259,7 +253,7 @@ public class KubernetesCredentials {
     }
   }
 
-  public boolean isValidKind(@Nonnull KubernetesKind kind) {
+  private boolean isValidKind(@Nonnull KubernetesKind kind) {
     return getKindStatus(kind) == KubernetesKindStatus.VALID;
   }
 
@@ -362,52 +356,20 @@ public class KubernetesCredentials {
     }
   }
 
-  @Nonnull
-  public ImmutableList<String> filterNamespaces(@Nonnull ImmutableList<String> namespaces) {
-    ImmutableList<String> result = namespaces;
-    if (!omitNamespaces.isEmpty()) {
-      result =
-          result.stream()
-              .filter(n -> !omitNamespaces.contains(n))
-              .collect(ImmutableList.toImmutableList());
-    }
-
-    return result;
-  }
-
-  /** Get declared namespaces without making a call to the kubernetes cluster */
-  @Nonnull
-  public ImmutableList<String> getDeclaredNamespacesFromCache() {
-    ImmutableList<String> result;
-    if (!namespaces.isEmpty()) {
-      result = namespaces;
-    } else {
-      result = liveNamespaceSupplier.getIfPresent();
-      if (result == null) {
-        // There's nothing in the cache, so return an empty list
-        log.warn("No cached namespaces for account {}", accountName);
-        result = ImmutableList.of();
-      }
-    }
-
-    return filterNamespaces(result);
-  }
-
-  /**
-   * Get declared namespaces, making a call to the kubernetes cluster if there's no cached value, or
-   * the cache is stale. Note that this is a best-effort call. If there's an error communicating to
-   * the kubernetes cluster, this routine may return an empty list.
-   */
-  @Nonnull
-  public ImmutableList<String> getDeclaredNamespaces() {
-    ImmutableList<String> result;
+  public List<String> getDeclaredNamespaces() {
+    List<String> result;
     if (!namespaces.isEmpty()) {
       result = namespaces;
     } else {
       result = liveNamespaceSupplier.get();
     }
 
-    return filterNamespaces(result);
+    if (!omitNamespaces.isEmpty()) {
+      result =
+          result.stream().filter(n -> !omitNamespaces.contains(n)).collect(Collectors.toList());
+    }
+
+    return result;
   }
 
   public boolean isMetricsEnabled() {
@@ -657,27 +619,6 @@ public class KubernetesCredentials {
 
   private <T> T runAndRecordMetrics(
       String action, List<KubernetesKind> kinds, String namespace, Supplier<T> op) {
-<<<<<<< HEAD
-    Map<String, String> tags = new HashMap<>();
-    tags.put("action", action);
-    tags.put(
-        "kinds",
-        kinds.stream().map(KubernetesKind::toString).sorted().collect(Collectors.joining(",")));
-    tags.put("account", accountName);
-    tags.put("namespace", Strings.isNullOrEmpty(namespace) ? "none" : namespace);
-    tags.put("success", "true");
-    long startTime = clock.monotonicTime();
-    try {
-      return op.get();
-    } catch (RuntimeException e) {
-      tags.put("success", "false");
-      tags.put("reason", e.getClass().getSimpleName());
-      throw e;
-    } finally {
-      registry
-          .timer(registry.createId("kubernetes.api", tags))
-          .record(clock.monotonicTime() - startTime, TimeUnit.NANOSECONDS);
-    }
     return op.get();
     //    Map<String, String> tags = new HashMap<>();
     //    tags.put("action", action);
@@ -816,7 +757,8 @@ public class KubernetesCredentials {
     private final KubernetesSpinnakerKindMap kubernetesSpinnakerKindMap;
     private final GlobalResourcePropertyRegistry globalResourcePropertyRegistry;
 
-    public KubernetesCredentials build(ManagedAccount managedAccount) {
+    public KubernetesCredentials build(
+        KubernetesConfigurationProperties.ManagedAccount managedAccount) {
       Namer<KubernetesManifest> manifestNamer =
           kubernetesNamerRegistry.get(managedAccount.getNamingStrategy());
       return new KubernetesCredentials(
@@ -832,7 +774,8 @@ public class KubernetesCredentials {
     }
 
     private String getKubeconfigFile(
-        ConfigFileService configFileService, ManagedAccount managedAccount) {
+        ConfigFileService configFileService,
+        KubernetesConfigurationProperties.ManagedAccount managedAccount) {
       if (StringUtils.isNotEmpty(managedAccount.getKubeconfigFile())) {
         return configFileService.getLocalPath(managedAccount.getKubeconfigFile());
       }
