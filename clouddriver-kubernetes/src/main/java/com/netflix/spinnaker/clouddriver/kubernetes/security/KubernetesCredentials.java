@@ -657,7 +657,6 @@ public class KubernetesCredentials {
 
   private <T> T runAndRecordMetrics(
       String action, List<KubernetesKind> kinds, String namespace, Supplier<T> op) {
-<<<<<<< HEAD
     Map<String, String> tags = new HashMap<>();
     tags.put("action", action);
     tags.put(
