@@ -4,13 +4,13 @@ MAINTAINER sig-platform@spinnaker.io
 LABEL name='clouddriver'
 LABEL maintainer='info@opsmx.io'
 LABEL release=1
-LABEL version='1.20.3'
+LABEL version='1.28.4'
 LABEL summary='Red Hat certified Open Enterprise Spinnaker ubi8 container image for clouddriver'
 LABEL description='Certified Open Enterprise Spinnaker is an Enterprise grade, Red Hat certified and OpsMx supported release of the popular and critically acclaimed Continuous Delivery platform Spinnaker'
 LABEL vendor='OpsMx'
 COPY clouddriver-web/build/install/clouddriver /opt/clouddriver
 
-#ENV KUBECTL_VERSION v1.22.0
+ENV KUBECTL_VERSION v1.22.0
 
 RUN yum -y install bash unzip wget unzip procps java-11-openjdk java-11-openjdk-devel.x86_64 python2 vim  net-tools curl git && \
   wget -nv https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip && \
@@ -20,11 +20,9 @@ RUN yum -y install bash unzip wget unzip procps java-11-openjdk java-11-openjdk-
   rm -rf ~/.config/gcloud
 RUN yum -y update
 
-
-RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-RUN chmod +x kubectl \
-    && mv kubectl /usr/local/bin
-    
+RUN wget https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
+  chmod +x kubectl && \
+  mv ./kubectl /usr/local/bin/kubectl
 
 RUN wget https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/aws-iam-authenticator && \
   chmod +x ./aws-iam-authenticator && \
@@ -45,7 +43,10 @@ RUN adduser spinnaker
 
 RUN mkdir -p /opt/clouddriver/plugins
 
+RUN chmod -R 777 /opt/clouddriver/plugins/
+RUN chown -R spinnaker:spinnaker /opt/
 USER spinnaker
+
 
 CMD  sleep 180s ; "/opt/clouddriver/bin/clouddriver"
 
