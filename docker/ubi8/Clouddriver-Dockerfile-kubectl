@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.3
+
+FROM registry.access.redhat.com/ubi8/ubi:8.7
 MAINTAINER sig-platform@spinnaker.io
 LABEL name='clouddriver'
 LABEL maintainer='info@opsmx.io'
@@ -46,4 +47,8 @@ RUN mkdir -p /opt/clouddriver/plugins
 
 USER spinnaker
 
-CMD ["/opt/clouddriver/bin/clouddriver"]
+CMD  sleep 180s ; "/opt/clouddriver/bin/clouddriver"
+
+
+
+
