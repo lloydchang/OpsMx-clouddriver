@@ -32,6 +32,12 @@ if [ "${platform}" = 'redhat' ]; then
    
    # Assigning Rhel Image Name according to Docker.io Details
    RELEASE_IMAGENAME="opsmx11/ubi8-spin-clouddriver:${GITHASH}-${BUILD_NUMBER}"
+   
+    # To Build Docker image with Given Docker File
+   docker build -t $IMAGENAME .  -f  ${DOCKERFILE_PATH} --no-cache 
+   
+   # Create new Image Tag for Docker.io with the previous Build
+   docker tag $IMAGENAME $RELEASE_IMAGENAME
 else
 
    # Assigning Ubuntu Based Image Name according to Quay.io Details
@@ -39,14 +45,13 @@ else
     
    # Assigning Ubuntu Based Image Name according to Docker.io Details
    RELEASE_IMAGENAME="opsmx11/spin-clouddriver:${GITHASH}-${BUILD_NUMBER}"
-fi
-
+   
    # To Build Docker image with Given Docker File
    docker build -t $IMAGENAME .  -f  ${DOCKERFILE_PATH} --no-cache 
    
    # Create new Image Tag for Docker.io with the previous Build
    docker tag $IMAGENAME $RELEASE_IMAGENAME
-   
+fi
    # Quay.io login
    docker login -u $quay_user -p $quay_pass quay.io
    
