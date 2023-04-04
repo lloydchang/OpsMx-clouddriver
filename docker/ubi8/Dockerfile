@@ -11,7 +11,7 @@ COPY clouddriver-web/build/install/clouddriver /opt/clouddriver
 
 ENV KUBECTL_VERSION v1.22.0
 
-RUN yum -y install bash jq yq unzip wget unzip procps java-11-openjdk java-11-openjdk-devel.x86_64 python2 vim  net-tools curl git && \
+RUN yum -y install bash jq  unzip wget unzip procps java-11-openjdk java-11-openjdk-devel.x86_64 python2 vim  net-tools curl git && \
   wget -nv https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip && \
   unzip -qq google-cloud-sdk.zip -d /opt && \
   rm google-cloud-sdk.zip && \
