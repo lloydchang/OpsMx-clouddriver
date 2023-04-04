@@ -46,5 +46,6 @@ echo "Build id is --------------------- $BUILD_ID"
    # To Push the Docker image into Quay.io
    docker push $RELEASE_IMAGENAME
 
+echo "Clouddriver: ${IMAGENAME}"
 # Quay Image Name as Artifact
-echo \"Quay_IMAGE_NAME\": \"${IMAGENAME}\" > file.properties;
+echo \"Clouddriver\": \"${IMAGENAME}\" > file.properties;
