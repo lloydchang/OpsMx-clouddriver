@@ -4,8 +4,8 @@ on:
   workflow_call:
   push:
    tags:
-   - 1.30.0_v5.80.0-*
-   - v5.80.0_1.30.0-*
+     - '1.30.0_v5.80.0-*'
+     - 'v5.80.0_1.30.0-*'
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=false -Xmx6g -Xms6g
   CONTAINER_REGISTRY: quay.io/opsmxpublic
