@@ -5,6 +5,15 @@ on:
   create:
    tags:
      - '*'
+ 
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      - main
+    # Sequence of patterns matched against refs/tags
+    tags:        
+      - v2
+      - '*'
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=false -Xmx6g -Xms6g
   CONTAINER_REGISTRY: quay.io/opsmxpublic
