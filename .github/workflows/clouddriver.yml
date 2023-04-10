@@ -4,6 +4,9 @@ on:
  push:
     branches:
     - '1.30.0-v5.80.0-customisations'
+ create:
+    tags:
+    - 'rc*'
     
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=false -Xmx6g -Xms6g
