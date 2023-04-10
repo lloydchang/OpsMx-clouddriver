@@ -4,17 +4,6 @@ on:
  push:
     branches:
     - 1.30.0-v5.80.0-customisations
-    tags:
-    - v*
- create:
-    tags:
-    - v*
- release:
-    types: 
-    - published
-    - released
-    - created
-    - deleted
     
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=false -Xmx6g -Xms6g
