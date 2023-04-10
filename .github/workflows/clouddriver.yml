@@ -1,11 +1,7 @@
 
 name: Java CI with Gradle Build
 on:
-  workflow_call:
-  create:
-   tags:
-     - v*
-   push:
+ push:
     branches:
     - master
 env:
