@@ -4,9 +4,11 @@ on:
  push:
     branches:
     - mastaer
+    tags:
+    - v*
  create:
-   tags:
-     - v*
+    tags:
+    - v*
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=false -Xmx6g -Xms6g
   CONTAINER_REGISTRY: quay.io/opsmxpublic
