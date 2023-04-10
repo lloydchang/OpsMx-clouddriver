@@ -3,7 +3,10 @@ name: Java CI with Gradle Build
 on:
  push:
     branches:
-    - master
+    - mastaer
+ create:
+   tags:
+     - v*
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=false -Xmx6g -Xms6g
   CONTAINER_REGISTRY: quay.io/opsmxpublic
