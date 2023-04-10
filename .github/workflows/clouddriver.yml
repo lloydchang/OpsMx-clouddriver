@@ -3,7 +3,7 @@ name: Java CI with Gradle Build
 on:
  push:
     branches:
-    - mastaer
+    - '*customisation*'
     tags:
     - v*
  create:
