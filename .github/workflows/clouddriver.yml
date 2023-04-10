@@ -2,7 +2,7 @@
 name: Java CI with Gradle1
 on:
   workflow_call:
-  push:
+  create:
    tags:
      - '1.30.0_v5.80.0-*'
      - 'v5.80.0_1.30.0-*'
