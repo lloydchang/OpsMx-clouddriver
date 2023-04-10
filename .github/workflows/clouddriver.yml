@@ -1,10 +1,13 @@
 
-name: Java CI with Gradle1
+name: Java CI with Gradle Build
 on:
   workflow_call:
   create:
    tags:
      - v*
+   push:
+    branches:
+    - master
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=false -Xmx6g -Xms6g
   CONTAINER_REGISTRY: quay.io/opsmxpublic
