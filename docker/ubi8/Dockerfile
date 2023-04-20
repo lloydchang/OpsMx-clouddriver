@@ -56,10 +56,11 @@ RUN adduser spinnaker
 RUN mkdir -p /opt/clouddriver/plugins
 RUN chown -R spinnaker:spinnaker /opt/
 
-RUN mkdir -p /etc/pki/tks/certs
-RUN chmod 777 /etc/pki/tks/certs
+RUN mkdir -p /etc/pki/tls/certs
+RUN chmod -R 777 /etc/pki/tls/certs
 
-RUN chmod 755 /var/
-RUN chown -R spinnaker:spinnaker /var
+
+RUN chmod -R 777 /var/lib/
+RUN chown -R spinnaker:spinnaker /var/lib/
 USER spinnaker
 CMD  sleep 180s ; "/opt/clouddriver/bin/clouddriver"
