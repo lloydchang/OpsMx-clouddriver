@@ -44,6 +44,17 @@ RUN mkdir -p /opt/clouddriver/plugins
 
 RUN chown -R spinnaker:spinnaker /opt/
 
+RUN mkdir -p /etc/pki/tks/certs
+RUN chmod 777 /etc/pki/tks/certs
+
+RUN chown -R spinnaker:spinnaker /etc/
+
+
+RUN chmod 755 /var/
+
+RUN chown -R spinnaker:spinnaker /var
+
+
 USER spinnaker
 
 CMD  sleep 180s ; "/opt/clouddriver/bin/clouddriver"
