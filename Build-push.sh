@@ -32,7 +32,7 @@ echo "Build id is --------------------- $BUILD_ID"
    RELEASE_IMAGENAME="opsmx11/ubi8-spin-clouddriver:${GITHASH}-${BUILD_NUMBER}"
    
    # To Build Docker image with Given Docker File
-   docker build -t $IMAGENAME -t $RELEASE_IMAGENAME .  -f  ${DOCKERFILE_PATH} --no-cache 
+   docker build -t $IMAGENAME -t $RELEASE_IMAGENAME .  -f  ${DOCKERFILE_PATH} --build-arg TARGETARCH=amd64  --no-cache 
    
    # Quay.io login
    docker login -u $quay_user -p $quay_pass quay.io
