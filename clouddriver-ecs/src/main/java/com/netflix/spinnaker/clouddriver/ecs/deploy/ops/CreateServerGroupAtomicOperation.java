@@ -661,7 +661,6 @@ public class CreateServerGroupAtomicOperation
           isTaskLongArnFormatEnabled = true;
         }
       }
-
       nextToken = response.getNextToken();
     } while (nextToken != null);
 
