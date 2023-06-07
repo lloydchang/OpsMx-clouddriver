@@ -15,7 +15,7 @@ ENV ECR_TOKEN_VERSION=v1.0.2
 ENV PATH "$PATH:/usr/local/bin/:/opt/google-cloud-sdk/bin/:/usr/local/bin/aws-iam-authenticator"
 
 USER root
-RUN yum -y install bash jq  tar unzip wget unzip procps java-11-openjdk java-11-openjdk-devel.x86_64 vim  net-tools curl git 
+RUN yum -y install bash jq  tar unzip wget unzip procps java-11-openjdk java-11-openjdk-devel.x86_64 vim  net-tools curl git python2
 
 # AWS CLI
 
@@ -66,5 +66,3 @@ USER spinnaker
 
 ENV SLEEP_TIME_SECONDS=10
 CMD  sleep $SLEEP_TIME_SECONDS ; "/opt/clouddriver/bin/clouddriver"
-
-
