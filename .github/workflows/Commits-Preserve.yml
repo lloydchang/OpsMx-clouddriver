@@ -7,16 +7,20 @@ on:
       - 8.0.4_1.26.6
       - 1.30.1_v5.80.1
       - 1.28.4_v5.76.3
-      - '!master'   # excludes master
-      
+      - '!master' 
+      - 'version-8.0.4-1.26.6'
+      - '1.30.1_v5.80.1'
+      - '1.28.4_v5.76.3'
     paths-ignore:
       - "*.md"
-
+      
   pull_request:
     types: 
       - "closed"
     paths-ignore:
       - "*.md"
+
+      
 jobs:
   update-readme:
     runs-on: ubuntu-latest
