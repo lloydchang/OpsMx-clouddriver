@@ -4,8 +4,11 @@ name: Update README with Commit
 on:
   push:
     branches:
-    - master
-    - '*1.30.1*'
+      - '8.0.4_1.26.6'       
+      - '1.30.1_v5.80.1'
+      - '1.28.4_v5.76.3'
+      - '!master'   # excludes master
+      
     paths-ignore:
       - "*.md"
 
