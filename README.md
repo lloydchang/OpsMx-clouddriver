@@ -21,6 +21,10 @@ The JVM will then listen for a debugger to be attached on port 7102.  The JVM wi
 the debugger to be attached before starting Clouddriver; the relevant JVM arguments can be seen and
 modified as needed in `build.gradle`.
 
+$${\color{lightblue} Recent \space commits:}$$ 
+
+              CommitID                   |   Author      | Commit Message          | Commit Date
+----------------------------------------------------------------------------------------------------
 
 
 2538106b0f24864547f003213d20885fe82d2048 | Yugandharkumar | Update Commits-Preserve.yml | 2023-08-08 
