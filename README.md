@@ -32,3 +32,6 @@ f71509d21645a74e43d9caba9776b9559a0f7818 | Yugandharkumar | Create commits-prese
 
 
 303ce7573bbf9da8da6e027424ba430a240d947d | Kiran Godishala | Fix for same cloned path issue (#33) | 2023-08-09 
+
+
+e8ffde23d5d954804ad3a801bfaeb60b213e75d3 | Kiran Godishala | Configured ThreadPoolTaskExecutor (#34) | 2023-08-11 
