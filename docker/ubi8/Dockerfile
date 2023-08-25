@@ -15,7 +15,7 @@ ENV ECR_TOKEN_VERSION=v1.0.2
 ENV PATH "$PATH:/usr/local/bin/:/opt/google-cloud-sdk/bin/:/usr/local/bin/aws-iam-authenticator"
 
 USER root
-RUN yum -y install bash jq  tar unzip wget procps java-11-openjdk java-11-openjdk-devel.x86_64 vim  net-tools curl git python2
+RUN yum -y install bash jq  tar unzip wget procps java-11-openjdk java-11-openjdk-devel.x86_64 vim  net-tools curl git python2 tzdata-java
 
 # AWS CLI
 
